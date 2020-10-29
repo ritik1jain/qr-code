@@ -3,11 +3,12 @@ import "./App.css";
 import axios from "axios";
 // import jwt from "jsonwebtoken";
 import Login from "./components/Login.js";
-import Alert from "./components/Alert.js";
+// import Alert from "./components/Alert.js";
 // import NotFound from "./components/NotFound.js";
-import DashboardAdmin from "./components/admin/DashboardAdmin.js";
-import DashboardHr from "./components/hr/DashboardHr.js";
-import DashboardEmployee from "./components/employee/DashboardEmployee.js";
+import DashboardAdmin from "./components/admin/DashboardAdmin";
+import DashboardHr from "./components/hr/DashboardHr";
+import DashboardEmployee from "./components/employee/DashboardEmployee";
+import PrivateRoute from './PrivateRoute';
 
 import {
   BrowserRouter as Router,
@@ -37,83 +38,33 @@ class App extends Component {
     return (
       <Provider store={store}>
       < Router >
-      <Alert />
-        <Switch>
-          <Route
-            exact
-            path="/login"
-            render={ props => 
-              <Login />
-              // props =>
-              // this.state.data["Account"] == 1 ? (
-              //   // <Dashboard />
-              //   <Redirect to="/admin" />
-              // ) : // <Login OnLogin={this.handleLogin}/>
-
-              //   this.state.data["Account"] == 2 ? (
-              //     // <Dashboard />
-              //     <Redirect to="/hr" />
-              //   ) : //
-              //     this.state.data["Account"] == 3 ? (
-              //       // <Dashboard />
-              //       <Redirect to="/employee" />
-              //     ) : (
-              //         <Login
-              //           onSubmit={this.handleSubmit}
-              //           loading={this.state.loading}
-              //           pass={this.state.pass}
-              //         />
-              //       )
-            }
+      <Route
+            
+            path="/"
+            component={Login}
           />
           <Route
+            
+            path="/login"
+            component={Login}
+          />
+          <Switch>
+          <PrivateRoute
             exact
             path="/admin"
-            render={ props => <DashboardAdmin />
-              // props =>
-              // this.state.data["Account"] == 1 ? (
-              //   <DashboardAdmin
-              //     data={this.state.data}
-              //     onLogout={this.handleLogout}
-              //   />
-              // ) : (
-              //     <Redirect to="/login" />
-              //   )
-            }
+            component={DashboardAdmin}
           />
-          <Route
+          <PrivateRoute
             exact
             path="/hr"
-            render={ props =>
-              <DashboardHr />
-              // props =>
-              // this.state.data["Account"] == 2 ? (
-              //   <DashboardHr
-              //     data={this.state.data}
-              //     onLogout={this.handleLogout}
-              //   />
-              // ) : (
-              //     <Redirect to="/login" />
-              //   )
-            }
+            component={DashboardHr}
           />
-          <Route
+          <PrivateRoute
             exact
             path="/employee"
-            render={ props =>
-              <DashboardEmployee />
-              // props =>
-              // this.state.data["Account"] == 3 ? (
-              //   <DashboardEmployee
-              //     data={this.state.data}
-              //     onLogout={this.handleLogout}
-              //   />
-              // ) : (
-              //     <Redirect to="/login" />
-              //   )
-            }
+            component={DashboardEmployee}
           />
-          <Redirect to="/login" />
+          
         </Switch>
       </Router >
       </Provider>

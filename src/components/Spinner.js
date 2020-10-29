@@ -3,7 +3,7 @@ import {Spinner} from 'reactstrap';
 
 const spinner = () => {
  return (
-     <div>
+     <div className="container">
          <Spinner color="primary"></Spinner>
      </div>
  )   

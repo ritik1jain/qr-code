@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import AllEmployees from './AllEmployees';
 import AddEmployee from './AddEmployee';
+import {logout } from '../../redux/actions/auth';
 
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import {
@@ -16,16 +17,23 @@ import {
 const DashboardHr = props => {
     return (
         <Router>
-            <Route path="/" exact component={props => <AllEmployees />} />
+            <Route path="/" exact render={props => <AllEmployees />} />
                 
     <Route render={({ location, history }) => (
         <React.Fragment>
             <SideNav
                 onSelect={(selected) => {
-                    const to = '/' + selected;
-                    if (location.pathname !== to) {
+                    if(selected == "logout")
+                    {
+                        logout();
+                        
+                    } else {
+                        const to = '/' + selected;
+                        if (location.pathname !== to) {
                         history.push(to);
                     }
+                    }
+                    
                 }}
             >
                 <SideNav.Toggle/>
@@ -38,7 +46,7 @@ const DashboardHr = props => {
                             All Employees
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="devices">
+                    <NavItem eventKey="addEmployee">
                         <NavIcon>
                             <i className="fa fa-fw fa-user" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
@@ -46,12 +54,20 @@ const DashboardHr = props => {
                             Add Employee
                         </NavText>
                     </NavItem>
+                    {/* <NavItem eventKey="logout">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-logout" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Logout
+                        </NavText>
+                    </NavItem> */}
                 </SideNav.Nav>
             </SideNav>
             <main>
                 <Route path="/" exact component={props => <AllEmployees />} />
                 <Route path="/home" component={props => <AllEmployees />} />
-                <Route path="/devices" component={props => <AddEmployee />} />
+                <Route path="/addEmployee" component={props => <AddEmployee />} />
             </main>
         </React.Fragment>
     )}

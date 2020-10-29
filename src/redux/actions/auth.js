@@ -42,11 +42,9 @@ export const login = (email, password) => async (dispatch) => {
 };
 }
 //'LOGOUT' / CLEAR PROFILE
-// export const logout = () => (dispatch) => {
-//   dispatch({
-//     type: CLEAR_HR,
-//   });
-//   dispatch({
-//     type: LOGOUT,
-//   });
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT,
+  });
+};
 

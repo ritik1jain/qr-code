@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { Table } from 'reactstrap';
 import { connect} from 'react-redux';
 import {getProfiles} from '../../redux/actions/profile';
-import Spinner from "../Spinner";
+import { Spinner } from 'reactstrap';
 
-const ProfileItem = ({profile}) => {
+const ProfileItem = ({profile, index}) => {
   return (
   
       <tr>
-        <th scope="row">1</th>
+        <th scope="row">{index+1}</th>
         <td>{profile.name}</td>
-        <td>{profile.email}</td>
-        <td>{profile.executiveID}</td>
+        <td>{profile.emailId}</td>
+        <td>{profile.executiveID ? profile.executiveID : profile.executiveId}</td>
       </tr>
   )
 }
@@ -26,7 +26,7 @@ const AllEmployees = ({getProfiles, profile: {profilesEmployee, loading }}) => {
 
     return (
       <Fragment>
-          { loading ? <Spinner /> : <Fragment>
+          { loading ? <Spinner color="primary" /> : <Fragment>
             <div className='container'>
         <div className='row'>
           <div className='col-12'>
@@ -47,7 +47,7 @@ const AllEmployees = ({getProfiles, profile: {profilesEmployee, loading }}) => {
             </thead>
             <tbody>
             {profilesEmployee.length > 0 ? (
-                        profilesEmployee.map(profile => (<ProfileItem key={profile._id} profile={profile} />
+                        profilesEmployee.map((profile,index) => (<ProfileItem index={index} key={profile._id} profile={profile} />
                         ))
                     ) : <h4>No profiles found...</h4>}
             </tbody>

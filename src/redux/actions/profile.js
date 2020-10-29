@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
+import {loadUser} from './auth';
 
 import {GET_EXECUTIVE,GET_EXECUTIVES,GET_HRS,EDIT_EXECUTIVE,EDIT_HR, EXECUTIVE_ERROR, HR_ERROR, ADD_EXECUTIVE, ADD_HR} from './types';
 // Get current users profile
@@ -236,5 +237,25 @@ export const getProfiles = () => async dispatch => {
 //     }
 //   }
 // };
+export const addEmployee = (FormData) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    const res = await axios.post('/api/hr/add_executive', FormData, config);
+
+    dispatch({
+      type: GET_EXECUTIVES,
+      payload: FormData
+    });
+    dispatch(loadUser());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
 
 

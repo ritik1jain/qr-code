@@ -1,24 +1,25 @@
 import React, {useState} from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import QrCode from './qrcode';
+import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux';
+import {addEmployee} from '../../redux/actions/profile';
 
-const AddEmployee = (props) => {
+const AddEmployee = ({addEmployee}) => {
 
     const [formData, setFormData] = useState({
         name: '',
-        email: '',
-        password: '',
-        executive_id: '',
+        emailId: '',
+        executiveId: '',
         phone: '',
         designation: '',
-        pan_no: '',
+        panNumber: '',
         projectName: '',
-        address: '',
-        result:false
+        address: ''
       });
     
-      const { name, email, password, executive_id, phone, designation, pan_no, projectName, address, result } = formData;
-
+      const { name, emailId, executiveId, phone, designation, panNumber, projectName, address } = formData;
       const toggleResult = () => {
           setFormData({...formData, result: true});
 
@@ -27,9 +28,10 @@ const AddEmployee = (props) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         // toggleResult();
       }
-        const onSubmit = (e) => {
+        const onSubmit = async(e) => {
         e.preventDefault();
         toggleResult();
+        addEmployee(formData);
       };
     
     return (
@@ -47,10 +49,10 @@ const AddEmployee = (props) => {
             <Row form>
             <Col md={6}>
                     <FormGroup>
-                        <Label for="executive_id">
-                            executive_id:
+                        <Label for="executiveId">
+                            executiveId:
                         </Label>
-                        <Input type="text" name="executive_id" id="executive_id" placeholder="executive_id" value={executive_id}
+                        <Input required type="text" name="executiveId" id="executiveId" placeholder="executiveId" value={executiveId}
             onChange={(e) => onChange(e)}/>
                     </FormGroup>
                 </Col>
@@ -59,27 +61,27 @@ const AddEmployee = (props) => {
                         <Label for="name">
                             Name:
                         </Label>
-                        <Input type="text" name="name" id="name" placeholder="name" value={name} onChange={(e) => onChange(e)}/>
+                        <Input required type="text" name="name" id="name" placeholder="name" value={name} onChange={(e) => onChange(e)}/>
                     </FormGroup>
                 </Col>
                 </Row>
                 <Row form>
                 <Col md={6}>
                     <FormGroup>
-                        <Label for="email">
-                            Email:
+                        <Label for="emailId">
+                            emailId:
                         </Label>
-                        <Input type="email" name="email" id="email" placeholder="Email" value={email} onChange={(e) => onChange(e)}/>
+                        <Input required type="emailId" name="emailId" id="emailId" placeholder="emailId" value={emailId} onChange={(e) => onChange(e)}/>
                     </FormGroup>
                 </Col>
-                <Col md={6}>
+                {/* <Col md={6}>
                     <FormGroup>
                         <Label for="password">
                             password:
                         </Label>
-                        <Input type="password" name="password" id="password" placeholder="password" value={password} onChange={(e) => onChange(e)}/>
+                        <Input required type="password" name="password" id="password" placeholder="password" value={password} onChange={(e) => onChange(e)}/>
                     </FormGroup>
-                </Col>
+                </Col> */}
                 </Row>
                 <Row form>
                 <Col md={6}>
@@ -87,7 +89,7 @@ const AddEmployee = (props) => {
                         <Label for="phone">
                             phone:
                         </Label>
-                        <Input type="text" name="phone" id="phone" placeholder="phone" value={phone} onChange={(e) => onChange(e)}/>
+                        <Input required type="text" name="phone" id="phone" placeholder="phone" value={phone} onChange={(e) => onChange(e)}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -95,17 +97,17 @@ const AddEmployee = (props) => {
                         <Label for="designation">
                             designation:
                         </Label>
-                        <Input type="text" name="designation" id="designation" placeholder="designation" value={designation} onChange={(e) => onChange(e)}/>
+                        <Input required type="text" name="designation" id="designation" placeholder="designation" value={designation} onChange={(e) => onChange(e)}/>
                     </FormGroup>
                 </Col>
                 </Row>
                 <Row form>
                 <Col md={6}>
                     <FormGroup>
-                        <Label for="pan_no">
+                        <Label for="panNumber">
                             Pan No.:
                         </Label>
-                        <Input type="pan_no" name="pan_no" id="pan_no" placeholder="pan_no" value={pan_no} onChange={(e) => onChange(e)}/>
+                        <Input required type="panNumber" name="panNumber" id="panNumber" placeholder="panNumber" value={panNumber} onChange={(e) => onChange(e)}/>
                     </FormGroup>
                 </Col>
                 <Col md={6}>
@@ -131,4 +133,10 @@ const AddEmployee = (props) => {
     )
 }
 
-export default AddEmployee;
+
+AddEmployee.propTypes = {
+    addEmployee: PropTypes.func.isRequired,
+  };
+  
+  export default connect(null, { addEmployee })(withRouter(AddEmployee));
+  
