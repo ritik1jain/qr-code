@@ -28,7 +28,7 @@ const DashboardHr = props => {
                         logout();
                         
                     } else {
-                        const to = '/' + selected;
+                        const to = '/hr/' + selected;
                         if (location.pathname !== to) {
                         history.push(to);
                     }
@@ -66,8 +66,8 @@ const DashboardHr = props => {
             </SideNav>
             <main>
                 <Route path="/" exact component={props => <AllEmployees />} />
-                <Route path="/home" component={props => <AllEmployees />} />
-                <Route path="/addEmployee" component={props => <AddEmployee />} />
+                <Route exact path="/hr/home" component={props => <AllEmployees />} />
+                <Route exact path="/hr/addEmployee" component={props => <AddEmployee />} />
             </main>
         </React.Fragment>
     )}

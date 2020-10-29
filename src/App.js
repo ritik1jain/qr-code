@@ -38,13 +38,8 @@ class App extends Component {
     return (
       <Provider store={store}>
       < Router >
-      <Route
-            
-            path="/"
-            component={Login}
-          />
           <Route
-            
+            exact
             path="/login"
             component={Login}
           />
@@ -64,7 +59,7 @@ class App extends Component {
             path="/employee"
             component={DashboardEmployee}
           />
-          
+          <Redirect to="/login" />
         </Switch>
       </Router >
       </Provider>
